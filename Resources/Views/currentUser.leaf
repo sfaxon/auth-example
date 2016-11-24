@@ -1,0 +1,18 @@
+#extend("base")
+
+#export("head") {
+  <title>My App</title>
+
+  <link href="https://fonts.googleapis.com/css?family=Quicksand:400,700,300" rel="stylesheet">
+  <link rel="stylesheet" href="/styles/app.css">
+}
+
+#export("body") {
+  <p>logged in as #(name), id is #(id)</p>
+  <p class="small">id can be used as the login id</p>
+  <p><a href="/">Home</a></p>
+  <p><a href="/users/secure">Secure Route</a></p>
+  <form action="/users/logout" method="POST">
+    <button type="submit" class="btn btn-warning">Logout</button>
+  </form>
+}

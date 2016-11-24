@@ -69,11 +69,14 @@ extension User: Auth.User {
 import HTTP
 
 extension Request {
-    func user() throws -> User {
-        guard let user = try auth.user() as? User else {
-            throw Abort.custom(status: .badRequest, message: "Invalid user type.")
+    func user() -> User? {
+        do {
+            if let user = try auth.user() as? User {
+                return user
+            }
+        } catch {
+            return nil
         }
-
-        return user
+        return nil
     }
 }

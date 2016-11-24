@@ -1,0 +1,20 @@
+#extend("base")
+
+#export("head") {
+  <title>Register</title>
+}
+
+#export("body") {
+    <h2>Register</h2>
+    <form class="form-signin" action="/users" method="POST">
+      <div class="form-group">
+        <label for="name">name</label>
+        <input type="text" class="form-control" id="name" placeholder="name" name="name">
+      </div>
+      <button type="submit" class="btn btn-primary">Submit</button>
+
+      <div>
+        <a href="/login">login</a>
+      </div>
+    </form>
+}
