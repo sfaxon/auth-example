@@ -3,6 +3,7 @@ import Auth
 import Fluent
 import HTTP
 import VaporMemory
+import Turnstile
 
 let drop = Droplet()
 
@@ -60,13 +61,19 @@ drop.group("users") { users in
         }
 
         let creds = try Identifier(id: id)
-        try req.auth.login(creds)
+        try req.auth.login(creds) // can this return AuthenticationDetails, or something with the sessionID?
 
         if req.accept.prefers("html") {
             return try drop.view.make("currentUser")
         }
+        
+        // how can I reasonably get access to the sessionID?
+        var token = ""
+        if let t = (req.storage["subject"] as? Subject)?.authDetails?.sessionID {
+            token = t
+        }
 
-        return try JSON(node: ["message": "Logged in via default, check vapor-auth cookie."])
+        return try JSON(node: ["message": "Logged in via default, check vapor-auth cookie.", "token": token])
     }
 
     users.post("logout") { req in
